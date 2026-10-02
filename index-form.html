@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student Form</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container narrow">
+    <h1 th:text="${student.id == null} ? 'Register Student' : 'Edit Student'">Student</h1>
+
+    <form th:action="@{/students/save}" th:object="${student}" method="post" class="form">
+        <input type="hidden" th:field="*{id}">
+
+        <label>Name</label>
+        <input type="text" th:field="*{name}">
+        <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+
+        <label>Email</label>
+        <input type="text" th:field="*{email}">
+        <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+
+        <label>Phone (10 digits, optional)</label>
+        <input type="text" th:field="*{phone}">
+        <span class="error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+
+        <label>Course</label>
+        <input type="text" th:field="*{course}">
+        <span class="error" th:if="${#fields.hasErrors('course')}" th:errors="*{course}"></span>
+
+        <label>Age</label>
+        <input type="number" th:field="*{age}">
+        <span class="error" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></span>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-green">Save</button>
+            <a th:href="@{/students}" class="btn btn-gray">Cancel</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

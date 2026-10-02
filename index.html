@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student Management System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <h1>Student Management System</h1>
+
+    <div class="alert" th:if="${message}" th:text="${message}"></div>
+
+    <div class="toolbar">
+        <form th:action="@{/students}" method="get" class="search">
+            <input type="text" name="keyword" th:value="${keyword}" placeholder="Search by id, name, email or course">
+            <button type="submit" class="btn">Search</button>
+            <a th:href="@{/students}" class="btn btn-gray">Show All</a>
+        </form>
+        <a th:href="@{/students/new}" class="btn btn-green">+ Add Student</a>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Course</th><th>Age</th><th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="s : ${students}">
+            <td th:text="${s.id}"></td>
+            <td th:text="${s.name}"></td>
+            <td th:text="${s.email}"></td>
+            <td th:text="${s.phone}"></td>
+            <td th:text="${s.course}"></td>
+            <td th:text="${s.age}"></td>
+            <td class="actions">
+                <a th:href="@{/students/edit/{id}(id=${s.id})}" class="btn btn-blue">Edit</a>
+                <form th:action="@{/students/delete/{id}(id=${s.id})}" method="post"
+                      onsubmit="return confirm('Delete this student?');">
+                    <button type="submit" class="btn btn-red">Delete</button>
+                </form>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(students)}">
+            <td colspan="7" class="empty">No students found.</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
